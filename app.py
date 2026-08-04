@@ -537,7 +537,12 @@ async function createStreamInDom(url, saveToLocalStorage = true) {
     const hlsUrl = data.hls_url + "?t=" + Date.now();
 
     if (window.Hls && Hls.isSupported()) {
-        const hls = new Hls({ liveSyncDurationCount: 3, maxLiveSyncPlaybackRate: 1.2, debug: false });
+        const hls = new Hls({
+            liveSyncDurationCount: 3,
+            maxLiveSyncPlaybackRate: 1.2,
+            debug: false,
+            backBufferLength: 30, // pure live playback, not a DVR: cap RAM instead of buffering forever
+        });
         hls.loadSource(hlsUrl);
         hls.attachMedia(video);
 
@@ -662,7 +667,12 @@ async function reloadStream(domId) {
     const hlsUrl = data.hls_url + "?t=" + Date.now();
 
     if (window.Hls && Hls.isSupported()) {
-        const hls = new Hls({ liveSyncDurationCount: 3, maxLiveSyncPlaybackRate: 1.2, debug: false });
+        const hls = new Hls({
+            liveSyncDurationCount: 3,
+            maxLiveSyncPlaybackRate: 1.2,
+            debug: false,
+            backBufferLength: 30, // pure live playback, not a DVR: cap RAM instead of buffering forever
+        });
         hls.loadSource(hlsUrl);
         hls.attachMedia(video);
 
