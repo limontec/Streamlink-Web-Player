@@ -12,10 +12,14 @@ once in a resizable, drag-to-reorder grid.
 - [FFmpeg](https://ffmpeg.org/download.html), installed locally
 
 ## Setup
+1. Clone and activate:
 
-1. Create and activate a virtual environment (keeps these dependencies out of
-   your system Python):
-
+   ```
+   git clone https://github.com/limontec/Streamlink-Web-Player/
+   ```
+   ```
+   cd Streamlink-Web-Player
+   ```
    ```
    python -m venv venv
    ```
