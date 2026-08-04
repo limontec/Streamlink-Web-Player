@@ -13,7 +13,34 @@ once in a resizable, drag-to-reorder grid.
 
 ## Setup
 
-1. Install the Python dependencies:
+1. Create and activate a virtual environment (keeps these dependencies out of
+   your system Python):
+
+   ```
+   python -m venv venv
+   ```
+
+   Activate it — PowerShell:
+
+   ```
+   venv\Scripts\Activate.ps1
+   ```
+
+   Activate it — cmd.exe:
+
+   ```
+   venv\Scripts\activate.bat
+   ```
+
+   Activate it — Linux/macOS:
+
+   ```
+   source venv/bin/activate
+   ```
+
+   Your prompt should now show a `(venv)` prefix. Deactivate anytime with `deactivate`.
+
+2. Install the Python dependencies:
 
    ```
    pip install -r requirements.txt
@@ -21,16 +48,18 @@ once in a resizable, drag-to-reorder grid.
 
    This installs Flask and Streamlink. Confirm the `streamlink` command works from a terminal afterward.
 
-2. Install FFmpeg and open `app.py` to point `FFMPEG_PATH` at your `ffmpeg.exe`:
+3. Install FFmpeg and open `app.py` to point `FFMPEG_PATH` at your `ffmpeg.exe`:
 
    ```python
    FFMPEG_PATH = r"C:\ffmpeg\bin\ffmpeg.exe"
    ```
 
-3. (Optional) Drop custom Streamlink plugins into the `custom_plugin/` folder
+4. (Optional) Drop custom Streamlink plugins into the `custom_plugin/` folder
    next to `app.py` (created automatically on first run).
 
 ## Running
+
+Make sure the virtual environment is active (`(venv)` in your prompt), then:
 
 ```
 python app.py
