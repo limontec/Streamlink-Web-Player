@@ -33,7 +33,7 @@ FFMPEG_PATH = r"C:\ffmpeg\bin\ffmpeg.exe"
 BASE_HLS_DIR = os.path.join(tempfile.gettempdir(), "streamlink_web_hls")
 
 # Max number of simultaneous streams (avoids accidentally exhausting CPU/bandwidth)
-MAX_STREAMS = 10
+MAX_STREAMS = 15
 
 # By default the server only accepts connections from this machine. Change to
 # "0.0.0.0" if you want to access it from other devices on your local network
@@ -332,6 +332,9 @@ HTML_PAGE = """
     .btn-reload:hover { background: #3498db; }
     .btn-close { background: #a83232; }
     .btn-close:hover { background: #e74c3c; }
+    .btn-blur { background: var(--bg-panel-2); border: 1px solid var(--border); color: var(--text-dim); }
+    .btn-blur:hover { background: var(--border); color: var(--text); }
+    .btn-blur.active { background: var(--accent); border-color: var(--accent); color: #0c0c0e; }
 
     .status {
         margin-top: 10px;
@@ -356,6 +359,10 @@ HTML_PAGE = """
         background: #000;
         border-radius: 6px;
         display: block;
+        transition: filter .15s;
+    }
+    video.blurred {
+        filter: blur(24px);
     }
 
     .toggle-log-btn {
@@ -473,6 +480,7 @@ async function createStreamInDom(url, saveToLocalStorage = true) {
                 <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${url}">Stream: ${url}</span>
             </div>
             <div class="header-controls">
+                <button class="btn-action btn-blur" onclick="toggleBlur('${domId}')" title="Blur Video">Blur</button>
                 <button class="btn-action btn-reload" onclick="reloadStream('${domId}')" title="Reload Player">Reload</button>
                 <button class="btn-action btn-close" onclick="closeStream('${domId}')" title="Close Stream">Close</button>
             </div>
@@ -742,6 +750,14 @@ async function closeStream(domId) {
 
     wrapper.remove();
     saveLocalState();
+}
+
+function toggleBlur(domId) {
+    const video = document.getElementById(`video_${domId}`);
+    const btn = event.target;
+    if (!video) return;
+    video.classList.toggle('blurred');
+    btn.classList.toggle('active', video.classList.contains('blurred'));
 }
 
 function toggleLog(domId) {
